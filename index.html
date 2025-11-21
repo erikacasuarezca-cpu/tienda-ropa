@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bluvix Store</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bluvix Store</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -47,6 +47,7 @@
     <p class="switchAuth">¿Ya tienes cuenta? <span id="goLogin">Inicia sesión</span></p>
     <p id="registerError" class="errorMsg"></p>
   </div>
+
 </div>
 
 <!-- ==========================================================
@@ -116,7 +117,7 @@
 </div>
 
 <!-- ==========================================================
-     MODALES DE PAGO
+     MODAL DE PAGO
 =========================================================== -->
 <div id="modalPago" class="modal hidden">
   <div class="modalContent">
@@ -154,7 +155,7 @@
 </div>
 
 <!-- ==========================================================
-     CATEGORÍAS
+     CATEGORÍAS FILTRO
 =========================================================== -->
 <div id="categoriasBox" class="categorias hidden">
   <button onclick="filtrar('Todos')" class="catBtn activo">Todos</button>
@@ -170,48 +171,11 @@
 <section id="catalogo" class="catalogo hidden"></section>
 
 <!-- ==========================================================
-     JAVASCRIPT (INCLUYE GOOGLE SHEETS)
+     JAVASCRIPT
 =========================================================== -->
 <script>
 
-//////////////////////////////////////////////////////////////
-// ⭐ GOOGLE SHEETS CONNECTION — API_URL + SAVE FUNCTIONS ⭐
-//////////////////////////////////////////////////////////////
-
-const API_URL = "https://script.google.com/macros/s/AKfycbw79uiejhooA4GMM9bNLB1_dHZ5sjVkM_zJhTakhneJoJoVKXPkiA-t5rTmlgibVCheHg/exec";
-
-/* Guardar usuario */
-async function guardarUsuarioEnSheets(usuario, pass) {
-  await fetch(API_URL + "?sheet=Usuarios", {
-    method: "POST",
-    body: JSON.stringify({
-      usuario: usuario,
-      contraseña: pass,
-      fecha: new Date().toLocaleString()
-    })
-  });
-}
-
-/* Guardar producto */
-async function guardarProductoEnSheets(producto) {
-  await fetch(API_URL + "?sheet=Productos", {
-    method: "POST",
-    body: JSON.stringify(producto)
-  });
-}
-
-/* Guardar compra */
-async function guardarCompraEnSheets(datos) {
-  await fetch(API_URL + "?sheet=Compras", {
-    method: "POST",
-    body: JSON.stringify(datos)
-  });
-}
-
-
-//////////////////////////////////////////////////////////////
-// ⭐ AQUÍ EMPIEZA TU CÓDIGO ORIGINAL ⭐
-//////////////////////////////////////////////////////////////
+const SHEET_URL = "https://script.google.com/macros/s/AKfycbw79uiejhooA4GMM9bNLB1_dHZ5sjVkM_zJhTakhneJoJoVKXPkiA-t5rTmlgibVCheHg/exec";
 
 
 /* ---------------- LOGIN / REGISTRO ---------------- */
@@ -239,8 +203,6 @@ btnRegister.onclick = () => {
 
   usuarios.push({ user: u, pass: p });
   localStorage.setItem("usuariosBluvix", JSON.stringify(usuarios));
-
-  guardarUsuarioEnSheets(u, p);
 
   registerError.style.color = "lightgreen";
   registerError.textContent = "Usuario creado";
@@ -277,29 +239,34 @@ function mostrarTienda(u) {
   categoriasBox.classList.remove("hidden");
   catalogo.classList.remove("hidden");
   nombreUsuario.textContent = u;
+
+  // FIX: evitar modal abierto por error al cargar
+  modalPago.classList.add("hidden");
+  procesandoPago.classList.add("hidden");
+  pagoFinalizado.classList.add("hidden");
 }
 
 /* ---------------- PRODUCTOS BASE ---------------- */
 let productos = JSON.parse(localStorage.getItem("productosBluvix")) || [
   { id: 1, nombre: "Camiseta", precio: 45000, categoria: "Superiores", img: "img/camiseta.jpg" },
   { id: 2, nombre: "Gorra", precio: 25000, categoria: "Accesorios", img: "img/gorra.jpg" },
-  { id: 3, nombre: "Sudadera", precio: 90000, categoria: "Superiores", img: "img/sudadera.jpg" },
-  { id: 4, nombre: "Tenis", precio: 210000, categoria: "Calzado", img: "img/tenis.jpg" }
+  { id: 3, nombre: "Medias", precio: 10000, categoria: "Accesorios", img: "img/medias.jpg" },
+  { id: 4, nombre: "Pantalón Cargo", precio: 90000, categoria: "Inferiores", img: "img/pantalon.jpg" },
+  { id: 5, nombre: "Buso Nike", precio: 110000, categoria: "Superiores", img: "img/sudadera.jpg" },
+  { id: 6, nombre: "Tenis Adidas", precio: 210000, categoria: "Calzado", img: "img/tenis.jpg" }
 ];
 
 function guardarProductos() {
   localStorage.setItem("productosBluvix", JSON.stringify(productos));
 }
 
-/* ---------------- CATEGORÍAS/FILTRO ---------------- */
+/* ---------------- CATEGORÍAS ---------------- */
 let filtroActual = "Todos";
 
 function filtrar(cat) {
   filtroActual = cat;
-
   document.querySelectorAll(".catBtn").forEach(b => b.classList.remove("activo"));
   [...document.querySelectorAll(".catBtn")].find(b => b.innerText === cat).classList.add("activo");
-
   mostrarCatalogo();
 }
 
@@ -320,7 +287,6 @@ function mostrarCatalogo() {
       `;
     });
 }
-
 mostrarCatalogo();
 
 /* ---------------- CARRITO ---------------- */
@@ -374,7 +340,6 @@ function actualizarCarrito() {
 }
 actualizarCarrito();
 
-/* Botón + */
 function sumar(id) {
   carrito.push(id);
   localStorage.setItem("carritoBluvix", JSON.stringify(carrito));
@@ -382,17 +347,14 @@ function sumar(id) {
   actualizarCarrito();
 }
 
-/* Botón – */
 function restar(id) {
   let index = carrito.indexOf(id);
   if (index !== -1) carrito.splice(index, 1);
-
   localStorage.setItem("carritoBluvix", JSON.stringify(carrito));
   cartCount.textContent = carrito.length;
   actualizarCarrito();
 }
 
-/* Eliminar completamente un producto */
 function eliminarTodo(id) {
   carrito = carrito.filter(x => x !== id);
   localStorage.setItem("carritoBluvix", JSON.stringify(carrito));
@@ -424,9 +386,9 @@ btnAddProduct.onclick = () => {
 
   let reader = new FileReader();
 
-  reader.onload = e => {
+  reader.onload = async e => {
 
-    let prod = {
+    let nuevoProducto = {
       id: Date.now(),
       nombre: newName.value,
       categoria: newCategory.value,
@@ -434,18 +396,18 @@ btnAddProduct.onclick = () => {
       img: e.target.result
     };
 
-    productos.push(prod);
+    productos.push(nuevoProducto);
     guardarProductos();
     mostrarCatalogo();
     generarListaAdmin();
 
-    guardarProductoEnSheets({
-      id: prod.id,
-      nombre: prod.nombre,
-      precio: prod.precio,
-      categoria: prod.categoria,
-      imagen: prod.img
+    // Enviar a Google Sheets
+    await fetch(SHEET_URL, {
+      method: "POST",
+      body: JSON.stringify(nuevoProducto)
     });
+
+    alert("Producto enviado a Sheets 📄");
   };
 
   reader.readAsDataURL(newImageFile.files[0]);
@@ -471,7 +433,7 @@ function eliminarProd(id) {
   generarListaAdmin();
 }
 
-/* ---------------- SIMULACIÓN DE COMPRA ---------------- */
+/* ---------------- PAGO ---------------- */
 btnSimularCompra.onclick = () => modalPago.classList.remove("hidden");
 btnCerrarPago.onclick = () => modalPago.classList.add("hidden");
 
@@ -482,15 +444,6 @@ btnProcesarPago.onclick = () => {
   procesandoPago.classList.remove("hidden");
 
   setTimeout(() => {
-
-    guardarCompraEnSheets({
-      usuario: localStorage.getItem("sesionBluvix"),
-      total: totalCarrito.textContent,
-      metodo: metodoPago.value,
-      fecha: new Date().toLocaleString(),
-      productos: JSON.stringify(carrito)
-    });
-
     procesandoPago.classList.add("hidden");
     pagoFinalizado.classList.remove("hidden");
 
@@ -498,7 +451,6 @@ btnProcesarPago.onclick = () => {
     localStorage.setItem("carritoBluvix", JSON.stringify(carrito));
     cartCount.textContent = 0;
     actualizarCarrito();
-
   }, 2000);
 };
 
@@ -508,3 +460,4 @@ btnCerrarFinal.onclick = () => pagoFinalizado.classList.add("hidden");
 
 </body>
 </html>
+
