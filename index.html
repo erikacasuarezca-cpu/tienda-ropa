@@ -116,7 +116,7 @@
 </div>
 
 <!-- ==========================================================
-     MODAL DE PAGO
+     MODALES DE PAGO
 =========================================================== -->
 <div id="modalPago" class="modal hidden">
   <div class="modalContent">
@@ -154,7 +154,7 @@
 </div>
 
 <!-- ==========================================================
-     CATEGORÍAS FILTRO (AHORA CON INFERIORES)
+     CATEGORÍAS
 =========================================================== -->
 <div id="categoriasBox" class="categorias hidden">
   <button onclick="filtrar('Todos')" class="catBtn activo">Todos</button>
@@ -170,9 +170,49 @@
 <section id="catalogo" class="catalogo hidden"></section>
 
 <!-- ==========================================================
-     JAVASCRIPT
+     JAVASCRIPT (INCLUYE GOOGLE SHEETS)
 =========================================================== -->
 <script>
+
+//////////////////////////////////////////////////////////////
+// ⭐ GOOGLE SHEETS CONNECTION — API_URL + SAVE FUNCTIONS ⭐
+//////////////////////////////////////////////////////////////
+
+const API_URL = "https://script.google.com/macros/s/AKfycbw79uiejhooA4GMM9bNLB1_dHZ5sjVkM_zJhTakhneJoJoVKXPkiA-t5rTmlgibVCheHg/exec";
+
+/* Guardar usuario */
+async function guardarUsuarioEnSheets(usuario, pass) {
+  await fetch(API_URL + "?sheet=Usuarios", {
+    method: "POST",
+    body: JSON.stringify({
+      usuario: usuario,
+      contraseña: pass,
+      fecha: new Date().toLocaleString()
+    })
+  });
+}
+
+/* Guardar producto */
+async function guardarProductoEnSheets(producto) {
+  await fetch(API_URL + "?sheet=Productos", {
+    method: "POST",
+    body: JSON.stringify(producto)
+  });
+}
+
+/* Guardar compra */
+async function guardarCompraEnSheets(datos) {
+  await fetch(API_URL + "?sheet=Compras", {
+    method: "POST",
+    body: JSON.stringify(datos)
+  });
+}
+
+
+//////////////////////////////////////////////////////////////
+// ⭐ AQUÍ EMPIEZA TU CÓDIGO ORIGINAL ⭐
+//////////////////////////////////////////////////////////////
+
 
 /* ---------------- LOGIN / REGISTRO ---------------- */
 let usuarios = JSON.parse(localStorage.getItem("usuariosBluvix")) || [];
@@ -199,6 +239,8 @@ btnRegister.onclick = () => {
 
   usuarios.push({ user: u, pass: p });
   localStorage.setItem("usuariosBluvix", JSON.stringify(usuarios));
+
+  guardarUsuarioEnSheets(u, p);
 
   registerError.style.color = "lightgreen";
   registerError.textContent = "Usuario creado";
@@ -241,10 +283,8 @@ function mostrarTienda(u) {
 let productos = JSON.parse(localStorage.getItem("productosBluvix")) || [
   { id: 1, nombre: "Camiseta", precio: 45000, categoria: "Superiores", img: "img/camiseta.jpg" },
   { id: 2, nombre: "Gorra", precio: 25000, categoria: "Accesorios", img: "img/gorra.jpg" },
-  { id: 3, nombre: "Sudadera (Buzo)", precio: 90000, categoria: "Superiores", img: "img/sudadera.jpg" },
-  { id: 4, nombre: "Tenis", precio: 210000, categoria: "Calzado", img: "img/tenis.jpg" },
-  { id: 5, nombre: "Pantalón", precio: 85000, categoria: "Inferiores", img: "img/pantalon.jpg" },
-  { id: 6, nombre: "Medias", precio: 12000, categoria: "Accesorios", img: "img/medias.jpg" }
+  { id: 3, nombre: "Sudadera", precio: 90000, categoria: "Superiores", img: "img/sudadera.jpg" },
+  { id: 4, nombre: "Tenis", precio: 210000, categoria: "Calzado", img: "img/tenis.jpg" }
 ];
 
 function guardarProductos() {
@@ -385,17 +425,27 @@ btnAddProduct.onclick = () => {
   let reader = new FileReader();
 
   reader.onload = e => {
-    productos.push({
+
+    let prod = {
       id: Date.now(),
       nombre: newName.value,
       categoria: newCategory.value,
       precio: parseInt(newPrice.value),
       img: e.target.result
-    });
+    };
 
+    productos.push(prod);
     guardarProductos();
     mostrarCatalogo();
     generarListaAdmin();
+
+    guardarProductoEnSheets({
+      id: prod.id,
+      nombre: prod.nombre,
+      precio: prod.precio,
+      categoria: prod.categoria,
+      imagen: prod.img
+    });
   };
 
   reader.readAsDataURL(newImageFile.files[0]);
@@ -432,6 +482,15 @@ btnProcesarPago.onclick = () => {
   procesandoPago.classList.remove("hidden");
 
   setTimeout(() => {
+
+    guardarCompraEnSheets({
+      usuario: localStorage.getItem("sesionBluvix"),
+      total: totalCarrito.textContent,
+      metodo: metodoPago.value,
+      fecha: new Date().toLocaleString(),
+      productos: JSON.stringify(carrito)
+    });
+
     procesandoPago.classList.add("hidden");
     pagoFinalizado.classList.remove("hidden");
 
@@ -439,6 +498,7 @@ btnProcesarPago.onclick = () => {
     localStorage.setItem("carritoBluvix", JSON.stringify(carrito));
     cartCount.textContent = 0;
     actualizarCarrito();
+
   }, 2000);
 };
 
@@ -448,5 +508,3 @@ btnCerrarFinal.onclick = () => pagoFinalizado.classList.add("hidden");
 
 </body>
 </html>
-
-
