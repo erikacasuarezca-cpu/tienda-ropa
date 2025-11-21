@@ -241,8 +241,9 @@ function mostrarTienda(u) {
 let productos = JSON.parse(localStorage.getItem("productosBluvix")) || [
   { id: 1, nombre: "Camiseta", precio: 45000, categoria: "Superiores", img: "img/camiseta.jpg" },
   { id: 2, nombre: "Gorra", precio: 25000, categoria: "Accesorios", img: "img/gorra.jpg" },
-  { id: 3, nombre: "Sudadera", precio: 90000, categoria: "Superiores", img: "img/sudadera.jpg" },
-  { id: 4, nombre: "Tenis", precio: 210000, categoria: "Calzado", img: "img/tenis.jpg" }
+  { id: 3, nombre: "Sudadera (Buzo)", precio: 90000, categoria: "Superiores", img: "img/sudadera.jpg" },
+  { id: 4, nombre: "Tenis", precio: 210000, categoria: "Calzado", img: "img/tenis.jpg" },
+  { id: 5, nombre: "Pantalón", precio: 85000, categoria: "Inferiores", img: "img/pantalon.jpg" }
 ];
 
 function guardarProductos() {
@@ -446,3 +447,4 @@ btnCerrarFinal.onclick = () => pagoFinalizado.classList.add("hidden");
 
 </body>
 </html>
+
