@@ -1,424 +1,394 @@
-/* ==========================================================
-   ESTILO A - GLOW AZUL PREMIUM
-   (Flotación, sombras suaves, neon blue effects, estilo KOAJ)
-=========================================================== */
+/* ===========================================
+   BLUVIX STORE - ESTILO COMPLETO Y PROFESIONAL
+   =========================================== */
 
+/* ---------- VARIABLES DE COLOR ---------- */
+:root {
+  --azul: #0a1f44;
+  --azul-oscuro: #07172e;
+  --azul-claro: #1e3a8a;
+  --btn: #1e40af;
+  --btn-hover: #1d4ed8;
+  --txt: #ffffff;
+  --gris: #e5e7eb;
+  --card-bg: #ffffff;
+  --sombras: rgba(0,0,0,0.15);
+}
+
+/* ---------- RESETEO ---------- */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 body {
-  background: #081424;
+  background: linear-gradient(135deg, var(--azul), var(--azul-oscuro));
   color: white;
   overflow-x: hidden;
 }
 
-/* Glow general */
-.glow {
-  box-shadow: 0 0 12px #4aa3ff88;
-}
-
-/* Botón general */
-.btn {
-  background: linear-gradient(135deg, #1b4b8c, #4aa3ff);
-  border: none;
-  padding: 12px 22px;
-  color: white;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: 0.25s;
-  box-shadow: 0 0 8px #4aa3ff55;
-}
-.btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 0 14px #4aa3ffcc;
-}
-
-/* ==========================================================
-   ENCABEZADO
-=========================================================== */
-
+/* ---------- TÍTULO ---------- */
 header {
   text-align: center;
-  padding: 40px 20px;
-  animation: fadeIn 0.8s ease-out;
-  position: relative;
-  z-index: 1;
+  padding: 25px 10px;
+  animation: fadeIn 1.2s ease;
 }
 
 .titulo {
   font-size: 60px;
   font-weight: 900;
-  color: #4aa3ff;
-  text-shadow: 0 0 12px #4aa3ff88;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px black;
 }
 
 .slogan {
-  margin-top: 8px;
-  opacity: 0.8;
   font-size: 20px;
+  opacity: 0.9;
+  margin-top: 5px;
 }
 
-/* ==========================================================
-   LOGIN | REGISTRO
-=========================================================== */
-
+/* ---------- TARJETAS DE LOGIN ---------- */
 .centerBox {
   display: flex;
   justify-content: center;
-  margin-top: 40px;
-  position: relative;
-  z-index: 1;
+  margin-top: 25px;
 }
 
 .authCard {
-  background: rgba(17, 38, 64, 0.65);
-  backdrop-filter: blur(10px);
-  border-radius: 18px;
+  background: white;
+  color: black;
+  padding: 25px;
+  border-radius: 12px;
   width: 330px;
-  padding: 28px;
-  box-shadow: 0 0 18px #0006;
-  border: 1px solid #4aa3ff33;
-  animation: floatIn 0.8s ease;
+  box-shadow: 0 4px 15px var(--sombras);
+  animation: fadeUp 0.7s ease;
+}
+
+.hidden {
+  display: none;
+}
+
+.authCard h2 {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .authCard input {
   width: 100%;
   padding: 12px;
-  margin-top: 12px;
+  margin-bottom: 12px;
   border-radius: 10px;
-  border: 1px solid #4aa3ff55;
-  background: rgba(255,255,255,0.08);
-  color: white;
-  outline: none;
-  transition: 0.25s;
-}
-.authCard input:focus {
-  border-color: #4aa3ff;
-  box-shadow: 0 0 8px #4aa3ff99;
+  border: 1px solid #aaa;
+  font-size: 15px;
 }
 
 .switchAuth span {
-  color: #4aa3ff;
+  color: var(--azul-claro);
   cursor: pointer;
-  transition: 0.2s;
-}
-.switchAuth span:hover {
-  text-shadow: 0 0 8px #4aa3ff;
+  font-weight: 600;
 }
 
-.hidden {
-  display: none !important;
+/* ---------- BOTONES ---------- */
+.btn {
+  width: 100%;
+  padding: 12px;
+  background: var(--btn);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 17px;
+  font-weight: bold;
+  transition: 0.3s;
 }
 
-/* ==========================================================
-   USUARIO
-=========================================================== */
-
-.usuario {
-  margin-top: 20px;
-  text-align: center;
-  animation: fadeIn 0.7s;
-  position: relative;
-  z-index: 1;
+.btn:hover {
+  background: var(--btn-hover);
+  transform: scale(1.03);
 }
 
 .logoutBtn {
-  margin-top: 15px;
-  background: #ff4e4e;
-  padding: 10px 20px;
-  border-radius: 8px;
+  margin-left: 10px;
+  background: #dc2626;
+  padding: 10px 15px;
+  border-radius: 10px;
+}
+
+/* ---------- BIENVENIDA ---------- */
+.usuario {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+  font-size: 22px;
+  animation: fadeIn 1s ease;
+}
+
+/* ---------- BOTÓN ADMIN ---------- */
+.adminBtn {
+  padding: 10px 25px;
+  font-size: 16px;
+  background: #f59e0b;
   border: none;
-  box-shadow: 0 0 8px #ff4e4eb0;
-  transition: 0.2s;
-}
-.logoutBtn:hover {
-  box-shadow: 0 0 14px #ff4e4e;
-  transform: translateY(-3px);
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
 }
 
-/* ==========================================================
-   CATEGORÍAS
-=========================================================== */
+/* ---------- PANEL ADMIN ---------- */
+.adminPanel {
+  background: white;
+  color: black;
+  width: 90%;
+  max-width: 550px;
+  margin: auto;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 0 15px var(--sombras);
+  animation: fadeIn 0.5s ease;
+}
 
+.adminPanel input, .adminPanel select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border-radius: 10px;
+  border: 1px solid #999;
+}
+
+.preview {
+  width: 140px;
+  margin: 10px 0;
+  border-radius: 10px;
+}
+
+.delItem {
+  display: flex;
+  justify-content: space-between;
+  background: #f3f4f6;
+  padding: 8px;
+  border-radius: 8px;
+  margin-top: 6px;
+}
+
+.btnExitAdmin {
+  background: #dc2626;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+/* ---------- CATEGORÍAS ---------- */
 .categorias {
   display: flex;
   justify-content: center;
-  margin-top: 25px;
-  gap: 15px;
-  animation: fadeUp 0.8s ease;
-  position: relative;
-  z-index: 1;
+  gap: 12px;
+  margin: 25px 0;
 }
 
 .catBtn {
-  background: #112c4e;
   padding: 10px 18px;
-  border-radius: 12px;
-  border: 1px solid #4aa3ff55;
-  color: white;
+  background: var(--azul-claro);
+  border-radius: 20px;
+  border: none;
   cursor: pointer;
-  transition: 0.25s;
+  transition: 0.3s;
+  font-weight: bold;
 }
+
 .catBtn:hover {
+  background: var(--btn-hover);
   transform: translateY(-3px);
-  box-shadow: 0 0 12px #4aa3ffcc;
 }
+
 .catBtn.activo {
-  background: #4aa3ff;
-  box-shadow: 0 0 15px #4aa3ffdd;
+  background: gold;
+  color: black;
 }
 
-/* ==========================================================
-   CATÁLOGO
-=========================================================== */
-
+/* ---------- CATÁLOGO ---------- */
 .catalogo {
-  margin-top: 40px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, 230px);
-  justify-content: center;
-  gap: 30px;
-  padding-bottom: 80px;
-  position: relative;
-  z-index: 1;
+  grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+  gap: 20px;
+  padding: 25px;
 }
 
+/* ---------- PRODUCTO CARD ---------- */
 .card {
-  background: #112640;
-  padding: 20px;
-  border-radius: 18px;
+  background: var(--card-bg);
+  border-radius: 14px;
+  padding: 12px;
+  color: black;
   text-align: center;
-  box-shadow: 0 0 18px #0007;
-  border: 1px solid #4aa3ff33;
+  box-shadow: 0 4px 15px var(--sombras);
   transition: 0.35s;
-  animation: cardFloat 1s ease forwards;
+  animation: fadeUp 0.7s ease;
 }
 
 .card:hover {
-  transform: translateY(-10px) scale(1.03);
-  box-shadow: 0 0 25px #4aa3ff88;
+  transform: translateY(-8px);
+  box-shadow: 0 8px 20px var(--sombras);
 }
 
 .card img {
   width: 100%;
-  border-radius: 14px;
-  height: 180px;
+  height: 220px;
   object-fit: cover;
-  box-shadow: 0 0 12px #0007;
-}
-
-.card h3 {
-  margin-top: 12px;
-  font-size: 20px;
+  border-radius: 12px;
 }
 
 .precio {
-  margin-top: 6px;
-  font-size: 18px;
-  color: #4aa3ff;
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 10px;
 }
 
 .btnAdd {
-  margin-top: 14px;
+  margin-top: 10px;
   width: 100%;
-  background: linear-gradient(135deg, #4aa3ff, #1b4b8c);
-  border-radius: 12px;
   padding: 12px;
-  font-weight: 700;
-  box-shadow: 0 0 12px #4aa3ff55;
-  transition: 0.25s;
+  border-radius: 12px;
+  border: none;
+  background: var(--btn);
+  color: white;
+  font-weight: bold;
+  transition: 0.3s;
 }
+
 .btnAdd:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 0 18px #4aa3ffcc;
+  background: var(--btn-hover);
+  transform: scale(1.05);
 }
 
-/* ==========================================================
-   CARRITO WIDGET
-=========================================================== */
-
+/* ---------- CARRITO ---------- */
 #carritoWidget {
   position: fixed;
-  bottom: 25px;
-  right: 25px;
-  background: #4aa3ff;
-  padding: 15px 20px;
-  border-radius: 40px;
+  top: 20px;
+  right: 20px;
+  background: gold;
+  color: black;
+  padding: 12px 18px;
+  border-radius: 50px;
   cursor: pointer;
-  font-size: 22px;
-  box-shadow: 0 0 18px #4aa3ffbb;
-  transition: 0.25s;
-  z-index: 9000;
+  font-size: 19px;
+  box-shadow: 0 4px 10px var(--sombras);
+  transition: 0.3s;
+  z-index: 9999 !important;
 }
 
 #carritoWidget:hover {
   transform: scale(1.08);
-  box-shadow: 0 0 25px #4aa3ff;
 }
 
-/* ==========================================================
-   PANEL DEL CARRITO
-=========================================================== */
-
+/* ---------- PANEL DEL CARRITO ---------- */
 .carritoPanel {
   position: fixed;
-  right: 0;
   top: 0;
-  width: 360px;
-  height: 100%;
-  background: #0f1f34;
-  padding: 25px;
-  box-shadow: -5px 0px 18px #0008;
+  right: 0;
+  width: 330px;
+  height: 100vh;
+  background: white;
+  color: black;
+  padding: 20px;
+  box-shadow: -5px 0 20px rgba(0,0,0,0.3);
+  z-index: 99999 !important;
+  animation: slideLeft 0.4s ease;
   overflow-y: auto;
-  animation: slideIn 0.4s ease-out;
-  z-index: 9500; /* SIEMPRE ENCIMA DEL CATÁLOGO */
 }
 
 .carritoItem {
-  background: #112640;
-  padding: 15px;
-  border-radius: 14px;
-  margin-bottom: 12px;
   display: flex;
-  gap: 12px;
-  border: 1px solid #4aa3ff33;
+  background: #f3f4f6;
+  padding: 10px;
+  border-radius: 12px;
+  margin-bottom: 12px;
 }
 
 .carritoItem img {
   width: 80px;
   height: 80px;
-  border-radius: 12px;
-  object-fit: cover;
+  border-radius: 10px;
 }
 
-.cantBtns button {
-  background: #4aa3ff;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  color: black;
-  font-weight: bold;
-  box-shadow: 0 0 8px #4aa3ff99;
+.infoCarrito {
+  margin-left: 10px;
+  flex: 1;
 }
 
 .btnQuitar {
-  background: #ff4e4e;
+  background: #dc2626;
+  color: white;
   border: none;
-  padding: 6px 10px;
+  padding: 5px 8px;
   border-radius: 8px;
   cursor: pointer;
-  box-shadow: 0 0 10px #ff4e4eb0;
+  height: 30px;
 }
 
-/* ==========================================================
-   MODALES DE PAGO
-=========================================================== */
+.cantBtns {
+  display: flex;
+  gap: 5px;
+}
 
+.cantBtns button {
+  background: var(--azul-claro);
+  color: white;
+  border: none;
+  padding: 4px 9px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btnClose {
+  width: 100%;
+  margin-top: 10px;
+  background: #dc2626;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+/* ---------- MODALES ---------- */
 .modal {
   position: fixed;
-  top: 0; left: 0;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  background: #0008;
+  background: rgba(0,0,0,0.55);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999; /* LO MÁXIMO */
+  z-index: 90000 !important;
 }
 
 .modalContent {
-  background: #112640;
-  padding: 30px;
-  width: 350px;
-  border-radius: 15px;
-  text-align: center;
-  box-shadow: 0 0 20px #4aa3ff55;
-  animation: fadeIn 0.5s ease-out;
-}
-
-.modalContent select {
-  width: 100%;
-  padding: 10px;
-  border-radius: 10px;
-  margin-top: 15px;
-}
-
-/* ==========================================================
-   PANEL ADMIN
-=========================================================== */
-
-.adminBtn {
-  background: #ffd000;
+  background: white;
   color: black;
-  padding: 12px 20px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: 700;
-  box-shadow: 0 0 12px #ffd00088;
-}
-
-.adminPanel {
-  background: #112640;
-  width: 90%;
-  max-width: 460px;
+  width: 85%;
+  max-width: 400px;
   padding: 25px;
-  border-radius: 18px;
-  margin: 25px auto;
-  border: 1px solid #4aa3ff33;
-  box-shadow: 0 0 22px #0009;
-  position: relative;
-  z-index: 9800; /* Casi lo más alto */
+  border-radius: 15px;
+  animation: fadeUp 0.5s ease;
 }
 
-.adminPanel input,
-.adminPanel select {
-  width: 100%;
-  padding: 12px;
-  border-radius: 10px;
-  border: 1px solid #4aa3ff55;
-  background: rgba(255,255,255,0.08);
-  color: white;
-  margin-top: 10px;
-}
-
-.preview {
-  width: 100%;
-  margin-top: 10px;
-  border-radius: 14px;
-  box-shadow: 0 0 12px #0008;
-}
-
-/* ==========================================================
-   ANIMACIONES
-=========================================================== */
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
-}
-
+/* ---------- ANIMACIONES ---------- */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes slideIn {
-  from { transform: translateX(100%); }
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideLeft {
+  from { transform: translateX(330px); }
   to { transform: translateX(0); }
 }
 
-@keyframes floatIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes cardFloat {
-  0% { opacity: 0; transform: translateY(15px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
